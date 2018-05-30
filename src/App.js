@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Platform } from "react-native";
-import { TabNavigator, StackNavigator } from "react-navigation";
+import { createMaterialTopTabNavigator, createStackNavigator } from "react-navigation";
 import { Button } from "react-native-elements";
 
 import AuthScreen from "./screens/AuthScreen";
@@ -17,11 +17,11 @@ export default class App extends Component {
       Auth: { screen: AuthScreen },
       Welcome: { screen: WelcomeScreen },
       Main: {
-        screen: TabNavigator({
+        screen: createMaterialTopTabNavigator({
           Map: { screen: MapScreen },
           Deck: { screen: DeckScreen },
           Review: {
-            screen: StackNavigator({
+            screen: createStackNavigator({
               Review: {
                 screen: ReviewScreen,
                 navigationOptions: ({ navigation }) => ({
@@ -46,7 +46,7 @@ export default class App extends Component {
       }
     };
 
-    const MainNavigator = TabNavigator(routeConfig);
+    const MainNavigator = createMaterialTopTabNavigator(routeConfig);
     return (
       <View style={{ flex: 1 }}>
         <MainNavigator />
