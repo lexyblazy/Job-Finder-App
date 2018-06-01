@@ -5,7 +5,6 @@ import { LoginManager, AccessToken } from "react-native-fbsdk";
 export const fbLogin = () => async dispatch => {
   const fb_token = await AsyncStorage.getItem("fb_token");
   if (fb_token) {
-    alert("Fb Token exists");
     dispatch({
       type: FB_LOGIN_SUCCESS,
       payload: fb_token
@@ -23,7 +22,6 @@ const doFacebookLogin = async dispatch => {
     if (result.isCancelled) {
       alert("Login was cancelled");
     } else {
-      alert("Login was successful");
       const { accessToken } = await AccessToken.getCurrentAccessToken();
       await AsyncStorage.setItem("fb_token", accessToken);
       dispatch({

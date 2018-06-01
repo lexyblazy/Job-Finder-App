@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Platform } from "react-native";
 import {
   createMaterialTopTabNavigator,
-  createStackNavigator
+  createStackNavigator,
+  createBottomTabNavigator,
+  createTabNavigator,
+  TabNavigator
 } from "react-navigation";
 import { Button } from "react-native-elements";
 import { Provider } from "react-redux";
-import store from './store'
+import store from "./store";
 import AuthScreen from "./screens/AuthScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import MainScreen from "./screens/MainScreen";
@@ -50,12 +53,18 @@ export default class App extends Component {
       }
     };
 
-    const MainNavigator = createMaterialTopTabNavigator(routeConfig);
+    const MainNavigator = createBottomTabNavigator(routeConfig, {
+      initialRouteName: "Welcome",
+      // lazy: true,
+      navigationOptions: {
+        tabBarVisible: false
+      }
+    });
     return (
       <Provider store={store}>
-      <View style={{ flex: 1 }}>
-        <MainNavigator />
-      </View>
+        <View style={{ flex: 1 }}>
+          <MainNavigator />
+        </View>
       </Provider>
     );
   }

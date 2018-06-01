@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, AsyncStorage, ActivityIndicator } from "react-native";
 
 import Slides from "../components/Slides";
 
@@ -10,11 +10,37 @@ const SLIDES_DATA = [
 ];
 
 class WelcomeScreen extends Component {
-  onwardsButton = () =>{
-    return this.props.navigation.navigate('Auth')
+  componentWillMount() {
+    let token = "";
+    setTimeout(() => {
+      token = AsyncStorage.getItem("fb_token");
+      if (token) {
+        this.props.navigation.navigate("Map");
+      } else {
+        this.setState({ token: false });
+      }
+    }, 500);
   }
+  state = { token: null };
+  onwardsButton = () => {
+    return this.props.navigation.navigate("Auth");
+  };
   render() {
-    return <Slides slides={SLIDES_DATA} onwards={this.onwardsButton}/>;
+    if (!this.state.token) {
+      return (
+        <View
+          style={{
+            backgroundColor: "#2e86de",
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <ActivityIndicator color="white" size={50} />
+        </View>
+      );
+    }
+    return <Slides slides={SLIDES_DATA} onwards={this.onwardsButton} />;
   }
 }
 
