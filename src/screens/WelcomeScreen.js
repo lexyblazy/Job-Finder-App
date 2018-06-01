@@ -15,11 +15,13 @@ class WelcomeScreen extends Component {
     setTimeout(() => {
       token = AsyncStorage.getItem("fb_token");
       if (token) {
+        
         this.props.navigation.navigate("Map");
+
       } else {
         this.setState({ token: false });
       }
-    }, 500);
+    }, 1000);
   }
   state = { token: null };
   onwardsButton = () => {
